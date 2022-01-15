@@ -1,3 +1,4 @@
+
 document.addEventListener("DOMContentLoaded", function() {
     let buttons = document.getElementsByTagName("button");
 
@@ -7,12 +8,13 @@ document.addEventListener("DOMContentLoaded", function() {
                 checkAnswer();
             } else {
                 let gameType = this.getAttribute("data-type");
-                runGame(gameType); 
+                runGame(gameType);
             }
         });
     }
 
-    runGame("addition")
+    runGame("addition");
+
 });
 
 
@@ -21,20 +23,24 @@ document.addEventListener("DOMContentLoaded", function() {
  * and after the user's answer has been processed
  */
 
-function runGame(gameType) {
+ function runGame(gameType) {
 
-   
+    // Creates two random numbers between 1 and 25
     let num1 = Math.floor(Math.random() * 25) + 1;
     let num2 = Math.floor(Math.random() * 25) + 1;
 
     if (gameType === "addition") {
         displayAdditionQuestion(num1, num2);
     } else {
-        alert(`Unknown Game Type: ${gameType}`);
-        throw `Unknown Game Type: ${gameType}. Aborting!`;
+        alert(`Unknown game type: ${gameType}`);
+        throw `Unknown game type: ${gameType}. Aborting!`;
     }
 
 }
+
+
+
+
 
  
 
@@ -47,9 +53,12 @@ function checkAnswer() {
     
     if (isCorrect) {
         alert("Hey! You Got it Right!");
+        incrementScore();
     } else {
         alert(`Ups... You Answered ${userAnswer},The answer was ${calculatedAnswer[0]}!`)
+        incrementWrongAnswer();
     }
+    runGame(calculatedAnswer[1]);
 }
 
 function calculateCorrectAnswer() {
@@ -67,9 +76,16 @@ function calculateCorrectAnswer() {
 
 }
 
-function incrementScore() {}
+function incrementScore() {
 
-function incrementWrongAnswer() {}
+    let oldScore = parseInt(document.getElementById("score").innerText);
+    document.getElementById("score").innerText = ++oldScore;
+}
+
+function incrementWrongAnswer() {
+    let oldScore = parseInt(document.getElementById("incorrect").innerText);
+    document.getElementById("incorrect").innerText = ++oldScore;
+}
 
 function displayAdditionQuestion(operand1, operand2) {
     document.getElementById("operand1").textContent = operand1;
